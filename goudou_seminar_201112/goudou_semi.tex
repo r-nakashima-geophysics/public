@@ -1,0 +1,1140 @@
+\documentclass[dvipdfmx,11pt,aspectratio=169]{beamer}
+
+% Beamer
+\usepackage{bxdpx-beamer} %dvipdfmx対応
+\usepackage{pxjahyper} %日本語しおり
+\usepackage{minijs}% ミニjsarticle
+\renewcommand{\kanjifamilydefault}{\gtdefault} %ゴシック体
+\usetheme{AnnArbor}  %テーマ
+\setbeamertemplate{navigation symbols}{} %ナビゲーションシンボル消去
+\usefonttheme{professionalfonts} %数式フォント
+\usepackage{tcolorbox} %tcolorbox
+\usepackage{multicol} %段組み
+\usepackage{cancel} %数式に取り消し線
+\AtBeginSection[]{
+    \frame{\tableofcontents[currentsection]} %目次スライド
+}
+
+%テーマの微調整
+\usecolortheme{seahorse}
+\usecolortheme[RGB={80,0,80}]{structure}
+\setbeamercolor{titlelike}{fg=yellow!80!orange, bg=structure!80!cyan}
+\setbeamercolor{frametitle}{fg=yellow!80!orange, bg=structure!80!cyan}
+\setbeamercolor{alerted text}{fg=red} %alert文の色
+\definecolor{subalert}{rgb}{0,0.3,1} %subalertの色を定義
+\setbeamertemplate{items}[circle] %itemのデフォルトは丸
+
+\usepackage{amsmath,amssymb} % 数式
+\usepackage{bm} % ベクトル
+\usepackage{subcaption} % サブキャプション
+\usepackage{mathrsfs} % 花文字
+\usepackage{newtxtext}  % 欧文フォント Times
+\renewcommand{\figurename}{} % 図にFigure:を入れない
+\numberwithin{equation}{section} % 式番号はsectionごと
+\usepackage{url} % URLを入れる時用
+\usepackage{colortbl} % 表に色をつける
+\renewcommand\thefootnote{*\arabic{footnote}} % footnoteにアスタリスクをつける
+
+\DeclareSymbolFont{eulerup}{U}{zeur}{m}{n}
+\DeclareMathSymbol{\umu}{\mathalpha}{eulerup}{"16} % Eulerフォントmu
+\DeclareMathSymbol{\upi}{\mathalpha}{eulerup}{"19} % Eulerフォント pi
+\DeclareMathSymbol{\upartial}{\mathalpha}{eulerup}{"40} % Eulerフォント partial
+\DeclareMathSymbol{\uO}{\mathalpha}{eulerup}{`O} % Eulerフォント O
+\DeclareMathSymbol{\uD}{\mathalpha}{eulerup}{`D} % Eulerフォント D
+\DeclareMathSymbol{\ul}{\mathalpha}{eulerup}{"60} % Eulerフォント リットル
+\DeclareMathSymbol{\ud}{\mathalpha}{eulerup}{`d} % Eulerフォント d
+\DeclareMathSymbol{\ue}{\mathalpha}{eulerup}{`e} % Eulerフォント e
+\DeclareMathSymbol{\ui}{\mathalpha}{eulerup}{`i} % Eulerフォント i
+\DeclareMathSymbol{\uhbar}{\mathalpha}{eulerup}{"80} % Eulerフォント h bar
+
+\title{回転球面上の2次元磁気流体波動}
+\subtitle{Two-dimensional magnetohydrodynamic waves on a rotating sphere with an imposed toroidal magnetic field \footnotemark[1]}
+\author{中島 涼輔\inst{\dag}}
+\institute[九大・理]{\inst{\dag}九州大学 理学研究院}
+\date[2020\,/\,11\,/\,12\quad(合同研究セミナー)]{深部・ダイナ合同研究セミナー\\$2020$年$11$月$12$日}
+
+\begin{document}
+
+\begin{frame}\frametitle{}
+
+\titlepage
+
+\footnotetext[1]{
+\scriptsize
+今回の発表の内容は、博士論文({\tiny \url{https://catalog.lib.kyushu-u.ac.jp/opac_detail_md/?reqCode=fromlist&lang=0&amode=MD823&bibid=4059999}})の前半部分に対応する。
+}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\section{はじめに}
+\subsection{研究背景}
+
+\begin{frame}\frametitle{研究背景}
+\begin{columns}[t]
+
+\begin{column}{0.65\columnwidth}
+	\underline{地球外核最上部の安定成層}
+	\begin{itemize}
+	\item 地震学的な研究により検出されたかも
+	\begin{itemize}
+		\item[-] 地震波速度によると, \\
+		コア最上部はあまり混合されていない？ \\
+		{\scriptsize (e.g. Helffrich \& Kaneshima, 2010~\cite{helffrich2010outer}; van Tent {\it et al.}, 2020~\cite{10.1093/gji/ggaa368})}
+		\item[-] グローバルに存在？ 厚さ数百$\mathrm{km}$？
+		\item[-] 熱起源？ 組成起源？
+		\item[-] ないかも？
+	\end{itemize}
+	\end{itemize}
+\vspace{0.15cm}
+	\underline{地磁気変動への影響 (\textcolor{subalert}{もし安定成層があれば})}
+	\begin{itemize}
+	\item 成層内は, 外核深部の流れ (対流) とは様子が異なる
+	\begin{itemize}
+		\item[-] 成層内を伝播する流体波動が存在可能
+	\end{itemize}
+	\item \textcolor{subalert}{波動伝播}の様子が\textcolor{subalert}{地磁気変動の観測から見える}かも
+	\item 逆に\alert{地磁気変動から, 安定成層を制約} {\footnotesize (e.g. Buffett, 2014~\cite{buffett2014geomagnetic})}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.3\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.5cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/1-s2.0-S0031920116303144-gr2_lrg.jpg}
+	\caption{\hspace{0.2\columnwidth}地球外核最上部の\\\hspace{0.2\columnwidth}$\mathrm{P}$波速度構造\\\hspace{0.2\columnwidth}Kaneshima(2018)~\cite{KANESHIMA2018234}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{問題設定}
+\begin{columns}[t]
+
+\begin{column}{0.75\columnwidth}
+	\underline{自転する球体に張りついた\alert{薄い}磁気流体の層}
+	\begin{itemize}
+		\item 地球外核の半径 ($3480\,\mathrm{km}$) $\gg$ 成層の厚さ (数百$\mathrm{km}$)
+		\item 磁気流体(MHD)の式 $+$ Coriolis力\\\qquad\qquad\qquad\qquad$+$ 鉛直方向に薄い近似 (気象・海洋) 
+	\end{itemize}
+\vspace{0.1cm}
+	\underline{波動伝播}
+	\begin{itemize}
+		\item 定常解 or 波より長い時間スケールの現象 (ダイナモ) の平均的な解
+		\item これらの解 (基本場) からの小さなズレが, 波として周囲に伝わる\\
+			\quad$\rightarrow$\alert{線形化}近似
+		\item 基本場も真面目にすると難しいので, 
+		\begin{equation}
+		\text{速度場: }\bm{U}_0\,=\,\bm{0}\,,\quad\text{磁場: }\bm{B}_0\,=\,B_{0\phi}(\theta)\hat{\bm{e}}_\phi\notag
+		\end{equation}
+		など, とても簡単で理想化された設定をつかう ($\theta$: 余緯度, $\phi$: 経度)
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.2\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-1cm}\hspace{0\columnwidth}\includegraphics[width=1.1\columnwidth]{./fig/thin.png}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{類似の研究}
+
+\begin{frame}\frametitle{類似の研究 (太陽タコクライン)}
+\begin{columns}[t]
+
+\begin{column}{0.65\columnwidth}
+	\underline{太陽内部のタコクライン}
+	\begin{itemize}
+		\item 対流層 (上) と放射層 (下) の間
+		\item 強い南北シアー (差動回転) $\frac{\ud U_{0\phi}(\theta)}{\ud \theta}\,(\neq0)$ が存在
+		\item $\Omega$効果のため, 太陽ダイナモにおいて重要かも
+	\end{itemize}
+\vspace{0.3cm}
+	\underline{トロイダル磁場 $B_{0\phi}(\theta)$ 入りのシアー不安定 (joint不安定)}
+	\begin{itemize}
+		\item タコクラインの力学を理解するために研究されている
+		\item \alert{線形安定性解析} $+$ 非線形計算
+		\begin{itemize}
+			\item[-] 2次元系(理想/非理想MHD): {\tiny Gilman \& Fox(1997~\cite{Gilman_1997}, 1999a~\cite{Fox_1999}, b~\cite{Gilman_1999}), Dikpati \& Gilman(1999)~\cite{Dikpati_1999}, Gilman \& Dikpati(2000)~\cite{Gilman_2000}, Cally(2001)~\cite{cally2001nonlinear}, Cally {\it et al.}(2003)~\cite{Cally_2003}, Dikpati {\it et al.}(2004)~\cite{Dikpati_2004}, Sharif \& Jones(2005)~\cite{doi:10.1080/03091920500372084}}
+			\item[-] MHD浅水系: {\tiny Gilman \& Dikpati(2002)~\cite{Gilman_2002}, Dikpati {\it et al.}(2003)~\cite{Dikpati_2003}}
+			\item[-] 薄層3次元系: {\tiny Cally(2003)~\cite{10.1046/j.1365-8711.2003.06236.x}, Gilman {\it et al.}(2007)~\cite{Gilman_2007}, Cally {\it et al.}(2008)~\cite{10.1111/j.1365-2966.2008.13934.x}}
+		\end{itemize}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.3\columnwidth}
+	\begin{figure}
+	\centering
+	\hspace{0.5\columnwidth}\includegraphics[width=\columnwidth]{./fig/tachocline.png}
+	\caption{太陽内部の自転角速度分布\\ Thompson {\it et al.}(2003)~\cite{doi:10.1146/annurev.astro.41.011802.094848}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{類似の研究 (線形波動 vs 線形安定性解析)}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{同様の系での\alert{線形波動}}\quad{\tiny Zaqarashvili {\it et al.}(2007)~\cite{zaqarashvili2007rossby}, Zaqarashvili {\it et al.}(2009)~\cite{Zaqarashvili_2009}\footnotemark[1], Heng \& Spitkovsky(2009)~\cite{Heng_2009}}\\
+	\vspace{-0.2cm}\hspace{3.93cm}{\tiny Heng \& Workman(2014)~\cite{Heng_2014}, M\'arquez-Artavia {\it et al.}(2017)~\cite{doi:10.1080/03091929.2017.1301937}}{\scriptsize \quad(\textcolor{subalert}{※全てMHD浅水系})}
+	\begin{itemize}
+		\item 基本場: $\bm{U}_0\,=\,\bm{0}\,,\bm{B}_0\,=\,B_{0}\sin\theta\hat{\bm{e}}_\phi$ ($B_0$は定数)
+		\begin{itemize}
+			\item[-] これ\alert{以外}の基本場を採用すると, 線形波動の問題が難しくなる
+		\end{itemize}
+		\item 一方, 線形安定性解析では, あまり問題にならない
+		\begin{itemize}
+			\item[-] 太陽タコクラインの研究では, 様々な背景流・背景磁場プロファイルが採用されている
+		\end{itemize}
+	\end{itemize}
+	\vspace{0.2cm}
+	\underline{線形波動と線形安定性解析の違い} : Fourier変換$\ue^{\ui(m\phi-\omega t)}$ ($\omega$: 角振動数\alert{$=$固有値})
+	\begin{itemize}
+		\item $\bm{U}_0\,=\,\bm{0}\,,\bm{B}_0\,=\,B_{0}\sin\theta\hat{\bm{e}}_\phi$\alert{以外}の基本場の場合\\
+		\begin{itemize}
+			\item[-] \textcolor{subalert}{実数}の\textcolor{subalert}{連続}固有値 (\alert{連続モード}, 位相混合) の出現\\
+			\item[-] 知りたい「線形波動」は, \textcolor{subalert}{実数}の\textcolor{subalert}{離散}固有値\quad$\rightarrow$\quad 連続モードに埋もれて, マスクされてしまう
+			\item[-] 不安定モードは一般に, \textcolor{subalert}{複素数}の\textcolor{subalert}{離散}固有値\quad$\rightarrow$\quad 埋もれていても, 虚部$\neq0$を探せばいい
+			\begin{itemize}
+				\item[$\rhd$] 不安定の発生を波の共鳴として理解する場合は, 連続モードの考慮も必要\\
+				\hspace{0cm}(Iga, 2013~\cite{iga_2013}; Taniguchi \& Ishiwatari, 2006~\cite{taniguchi_ishiwatari_2006})
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\end{column}
+
+\end{columns}
+
+\footnotetext[1]{
+\scriptsize
+基本場: $\bm{B}_0\,=\,B_{0}\sin\theta\cos\theta\hat{\bm{e}}_\phi$
+}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\section{基礎知識}
+\subsection{回転系の磁気流体波動}
+
+\begin{frame}\frametitle{回転系の磁気流体波動}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	説明のために$f$平面で, 簡単な背景場 ($\bm{U}_0\,=\,\bm{0}\,,\bm{B}_0$が一様) の場合を考える\\
+	\vspace{0.2cm}\underline{理想MHD ($\eta=0$, 電気伝導度$\infty$)の摂動方程式} : $\bm{U}=\bm{U}_0+\bm{u}$, $\bm{B}=\bm{B}_0+\bm{b}$
+	{\small
+	\begin{align}
+	\frac{\upartial\bm{u}}{\upartial t}\,+\,f\hat{\bm{e}}_z\times\bm{u}\,&=\,-\frac{1}{\rho_0}\bm{\nabla}\left(p+\frac{\bm{B}_0\bm{\cdot}\bm{b}}{\mu_\mathrm{m}}\right)\,+\,\frac{(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{b}}{\rho_0\mu_\mathrm{m}}\notag\\
+	\frac{\upartial\bm{b}}{\upartial t}\,&=\,(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{u}\,+\,\cancel{\eta_\mathrm{m}\nabla^2\bm{b}}
+	\notag
+	\end{align}
+	}
+	波数ベクトルを$\bm{k}$とすると,
+	\begin{itemize}
+		\item $\frac{\upartial\bm{u}}{\upartial t}+f\hat{\bm{e}}_z\times\bm{u}\approx0\quad\cdots\quad$\textcolor{subalert}{慣性波}: $\omega_\text{Inertial}=fk_z/|\bm{k}|$
+		\item $\frac{\upartial\bm{u}}{\upartial t}\approx\frac{(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{b}}{\rho_0\mu_\mathrm{m}}$ \,\,\&\,\, $\frac{\upartial\bm{b}}{\upartial t}=(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{u}\quad\cdots\quad$\textcolor{subalert}{Alfv\'en波}: $\omega_\text{Alfv\'en}=(\bm{B}_0\bm{\cdot}\bm{k})/\sqrt{\rho_0\mu_\mathrm{m}}$
+		\item $f\hat{\bm{e}}_z\times\bm{u}\approx\frac{(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{b}}{\rho_0\mu_\mathrm{m}}$ \,\,\&\,\, $\frac{\upartial\bm{b}}{\upartial t}=(\bm{B}_0\bm{\cdot}\bm{\nabla})\bm{u}\quad\cdots\quad$\alert{MC波}: $\omega_\text{MC}=\omega_\text{Alfv\'en}^2/\omega_\text{Inertial}$\\
+		\vspace{0.2cm}\alert{Coriolis力とLorentz力がバランス}, MC = Magnetic-Coriolis
+	\end{itemize}
+\end{column}
+	
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{回転系の磁気流体波動($\beta$面, 球面)}
+\begin{columns}[t]
+
+\begin{column}{0.55\columnwidth}
+	\underline{$\beta$平面の場合}
+	\begin{itemize}
+		\item \alert{$\beta$効果とLorentz力がバランス}\\
+		$\longrightarrow\quad$\alert{遅い磁気Rossby波} (\alert{MC Rossby波})\\
+		\qquad\quad$\omega_\text{MCRossby}=-\omega_\text{Alfv\'en}^2/\omega_\text{Rossby}$
+		\item 速い磁気Rossby波 (普通のRossby波) と\\
+		遅い磁気Rossby波がペアで現れる
+		\item 速い/遅いで, 位相速度の向きは東西逆
+	\end{itemize}
+	\vspace{0.05cm}
+	\underline{2次元球面の場合}
+	\begin{itemize}
+		\item 基本場: $\bm{U}_0\,=\,\bm{0}\,,\bm{B}_0\,=\,B_{0}\sin\theta\hat{\bm{e}}_\phi$\\
+		(\alert{連続モードが現れない}場合)\\
+		右図は, 東西波数$m=2$での分散関係
+		\item 磁場が強いと, 回転の影響は小さくなり,\\
+		2つのRossby波はAlfv\'en波になる
+	\end{itemize}
+\end{column}
+	
+\begin{column}{0.4\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-1.7cm}\hspace{0\columnwidth}\includegraphics[width=0.95\columnwidth]{./fig/dispersion_sin.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{回転系の磁気流体波動(球面)}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.8cm}\hspace{0\columnwidth}\includegraphics[width=0.78\columnwidth]{./fig/dispersion_sin2.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+	\vspace{-1.1cm}
+	{\small
+	\begin{equation}
+		\text{(流線関数)}\propto \mathscr{P}_n^m(\theta)\ue^{\ui(m\phi-\omega t)}\,,\qquad\lambda\,=\,\frac{-m\pm m\sqrt{1+4\alpha^2n(n+1)[n(n+1)-2]}}{2n(n+1)}\notag
+	\end{equation}
+	}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{"遅い波の近似"}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{地磁気変動と関係づけたいときは, \alert{遅い波}を考える}
+	\begin{itemize}
+		\item マントルは, ほんの少し電気を通すので, コアからの速い磁場のシグナルは遮蔽される
+		\item コア内の\alert{年スケールの変化}だけが, 地上で地磁気変動として観測できる (と言われている)
+		\item 特に, MC波\footnotemark[1]や遅い磁気Rossby波 (e.g. Hide (1966)~\cite{doi:10.1098/rsta.1966.0026}: 西方移動\footnotemark[2])
+	\end{itemize}
+	\vspace{0.1cm}
+	\underline{"遅い波の近似" (と中島が呼んでいる)}
+	\begin{itemize}
+		\item \textcolor{subalert}{慣性項を無視}して\textcolor{subalert}{MC波 or 遅い磁気Rossby波だけを残す}近似
+		\item $\omega^2\ll\omega_\text{Alfv\'en}^2=(\bm{B}_0\bm{\cdot}\bm{k})^2/\rho_0\mu_\mathrm{m}$の時に適切な近似だが, \\
+	背景磁場$\bm{B}_0$が空間変化して\alert{局所的に$\bm{B}_0=0$}のときでも, たまに用いられている
+	\end{itemize}
+	\vspace{0.2cm}
+\end{column}
+
+\end{columns}
+
+\footnotetext[1]{
+\scriptsize
+MAC波は, 浮力の復元力によって加速されたMC波なので, あえて区別しなかった
+}
+\footnotetext[2]{
+\scriptsize
+\vspace{-0.5cm}
+\begin{table}[htb]
+  \begin{tabular}{|c||c|c|} \hline
+     & 薄層 & 分厚い層(Taylor柱) \\ \hline \hline
+    (速い磁気) Rossby波 & 西進 & 東進\\ \hline
+    遅い磁気Rossby波 & 東進 & 西進\\ \hline
+  \end{tabular}
+\end{table}
+}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{連続モードとは}
+
+\begin{frame}\frametitle{平行シアー流中の連続モード}
+\begin{columns}[t]
+
+\begin{column}{0.85\columnwidth}
+	\underline{Rayleigh方程式} : シアー不安定 (順圧不安定) を記述\\
+	\vspace{0.1cm}\quad$\varpi=$渦度, $\psi=$流線関数
+	{\small
+	\begin{equation}
+		\left(U(y)-\frac{\omega}{k_x}\right)\varpi\,+\,\cancel{\frac{\ud^2U(y)}{\ud y^2}\psi}\,=\,0\,,\qquad\varpi\,=\,-\nabla^2\psi\notag
+	\end{equation}
+	}
+	\vspace{-0.3cm}
+	\begin{itemize}
+		\item 線形シアー流(Couette流) : $U(y)=U'y$ ($U'$は定数) を \\
+		考えると, 境界条件にあう\alert{離散モードが存在しない}\\
+		{\footnotesize (e.g. Case, 1960~\cite{doi:10.1063/1.1706010}; Balmforth \& Morrison, 1995~\cite{doi:10.1111/j.1749-6632.1995.tb12163.x})}\\
+		\vspace{0.25cm}
+		{\footnotesize
+		\quad$U(y)-\omega/k_x=U'y-\omega/k_x=0$となる$y$を$y_\mathrm{c}$とする (\alert{臨界層}, 臨界緯度 \alert{$=$確定特異点})\\
+		\quad$\varpi=\Lambda(y_\mathrm{c})\delta(y-y_\mathrm{c})\,\xrightarrow{\text{時間Fourier逆変換}}\,\varpi=\int_{-\infty}^{\infty}\textcolor{subalert}{\Lambda(y_\mathrm{c})\delta(y-y_\mathrm{c})\ue^{-\ui U'\alert{y_\mathrm{c}}k_xt}}\ud(U'\alert{y_\mathrm{c}}k_x)$\\
+		\quad\quad$\Longrightarrow\quad$ 渦度$\varpi\sim\ue^{\ui U'\alert{y}k_xt}$というように, 座標$\alert{y}$に依存する時間依存性を持つ\\
+		\quad\qquad\qquad 流線関数$\psi=-\nabla^{-2}\varpi$は$t$の負の冪で減衰する (\alert{位相混合})
+		}
+		\vspace{0.1cm}
+		\item 任意の初期値の時間発展を表現するには, \alert{連続モード}が必要\\
+	\end{itemize}
+\end{column}
+
+
+\begin{column}{0.15\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.7cm}\hspace{-0.8\columnwidth}\includegraphics[width=1.8\columnwidth]{./fig/shear.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{平行シアー流中の連続モード}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	渦度分布の初期値が簡単な場合は手で解ける
+	\begin{itemize}
+		\item 渦度摂動$\varpi$が, 背景流 $U(y)=U'y$にただ流されるだけ
+		\item このふるまいは, (領域全体で同一の周波数を持つ) \alert{離散モードでは表せない}
+	\end{itemize}
+	\begin{figure}
+	\centering
+	\vspace{-0.2cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/phase_mixing.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{位相混合いろいろ}
+\begin{columns}[t]
+
+\begin{column}{0.8\columnwidth}
+	\vspace{-0.1cm}
+	連続モード・位相混合は様々な問題で現れる
+	\begin{itemize}
+		\item \underline{シアー流}
+		\item \underline{無衝突プラズマ\footnotemark[1]} {\footnotesize (e.g. Van Kampen, 1955~\cite{VANKAMPEN1955949}; Case, 1959~\cite{CASE1959349})}\\
+		\begin{itemize}
+			\item[-] 速度が速い粒子たちは速く進み, 速度が遅い粒子たちは遅く進む
+		\end{itemize}
+		\item \underline{\alert{背景磁場$\bm{B}_0$の勾配がある場合のAlfv\'en波}}\\
+		\begin{itemize}
+			\item[-] \alert{Alfv\'en波は磁力線に沿って伝わる}\\
+			\item[-] \alert{位相速度は, 局所的な磁場強度に依存}
+		\end{itemize}
+		\item[$\triangle$] \underline{(Ekman数$\rightarrow0$の)回転球殻対流の線形安定性解析}\\
+		\begin{itemize}
+			\item[-] 円筒動径方向$(\upartial/\upartial s)$のオーダリングを間違えると,\\
+			臨界モードの東西位相速度が$s$に依存してしまう\\
+			{\footnotesize (e.g. Soward, 1977~\cite{doi:10.1080/03091927708242315}; Jones {\it et al.}, 2000~\cite{jones_soward_mussa_2000})}
+		\end{itemize}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.15\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{1.5cm}\hspace{-1.5\columnwidth}\includegraphics[width=2.5\columnwidth]{./fig/alfven_continuum.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+
+\footnotetext[1]{
+\scriptsize
+Vlasov方程式
+\tiny
+\begin{equation}
+\left(\frac{\upartial}{\upartial t}\,+\,\bm{v}_e\bm{\cdot}\bm{\nabla}\right)f\,=\,\frac{e}{m_e}\bm{E}\bm{\cdot}\frac{\upartial f_0(\bm{v}_e)}{\upartial\bm{v}_e}\,,\qquad\bm{\nabla}\bm{\cdot}\bm{E}\,=\,-\frac{e}{\varepsilon}\iiint f\ud^3\bm{v}_e
+\notag
+\end{equation}
+\scriptsize
+式が同じというわけではないが, シアー流とは$\bm{v}_e\leftrightarrow y$, $f_0(\bm{v}_e)\leftrightarrow U(y)$という対応関係
+}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{2次元回転球面の場合のAlfv\'en連続モード}
+\begin{columns}[t]
+
+\begin{column}{0.9\columnwidth}
+	\underline{球面の場合}
+	\begin{itemize}
+		\item[-] $\bm{U}_0\,=\,\bm{0}\,,\bm{B}_0\,=\,B_{0}\sin\theta\hat{\bm{e}}_\phi$のとき, 連続モードなし
+		\begin{itemize}
+			\item[$\rhd$] 余緯度$\theta=\theta_0$でのAlfv\'en波の東西位相速度 : $\dfrac{\omega}{m/R_0}=\dfrac{B_0\sin\theta_0}{\sqrt{\rho_0\mu_\mathrm{m}}}$
+			\item[$\rhd$] 余緯度$\theta=\theta_0$での$\phi$方向$1$周分の距離 : $2\upi R_0\sin\theta_0$
+			\item[$\rhd$] $1$周するのにかかる時間が全ての緯度で等しいので, 位相混合起こらず
+		\end{itemize}
+		\vspace{0.1cm}
+		\item[-] \alert{それ以外}の全ての背景場では, \alert{連続モードが存在}\\
+		\vspace{0.1cm}
+		一般に, 臨界(余)緯度$\theta=\theta_\mathrm{c}$は以下を満たす\footnotemark[1]
+		\vspace{-0.2cm}
+		{\scriptsize
+		\begin{equation}
+		\left(U_{0\phi}(\theta_\mathrm{c})-\frac{\omega}{m/R_0}\right)^2\,=\,\left(\frac{B_{0\phi}(\theta_\mathrm{c})/\sqrt{\rho_0\mu_\mathrm{m}}}{\sin\theta_\mathrm{c}}\right)^2\notag
+		\end{equation}
+		}
+		\begin{itemize}
+			\vspace{-0.4cm}
+						\item[$\rhd$] "遅い波の近似"では, 上式の$\omega$を無視する$\Longrightarrow\,$\alert{\underline{連続モードが消える}}
+			\item[$\rhd$] $2$乗になっているのは, Alfv\'en波が磁力線の順方向と逆方向の両方に伝播するため\\
+			\vspace{0.1cm}
+		\end{itemize}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.05\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.5cm}\hspace{-2.5\columnwidth}\includegraphics[width=2.9\columnwidth]{./fig/toroidal_field.png}
+	\caption{\hspace{-2.5\columnwidth}$B_{0\phi}=B_0\sin\theta$}
+	\end{figure}
+\end{column}
+
+\end{columns}
+
+\footnotetext[1]{
+\scriptsize
+回転系ではなく慣性系で考えるときは, $U_{0\phi}=\varOmega_0R_0\sin\theta$が剛体回転なので, $U_{0\phi}$を$\sin\theta$で割る
+}
+
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{連続モードの例 : Gizon {\it et al.}(2020)~\cite{refId0_gizon}}
+\begin{columns}[t]
+
+\begin{column}{0.6\columnwidth}
+	\underline{シアー流中のRossby波}
+	\begin{itemize}
+		\item 太陽の表面近くでsectorial ($n=m$)な\\
+		(普通の)Rossby波らしきものが見つかる\\
+		{\scriptsize (L\"optien {\it et al.}, 2018~\cite{Loptien2018}; Liang {\it et al.}, 2019~\cite{refId0_liang})}
+		\vspace{0.2cm}
+		\item \alert{非粘性}の場合, \alert{連続モード}が現れる\\
+		固有関数は, 臨界層で特異的な構造
+		\vspace{0.2cm}
+		\item \alert{粘性}を入れて, Orr-Sommerfeld方程式にする\\
+		\alert{連続モードは消え, 全て離散モードに}\\
+		\vspace{0.2cm}
+		臨界層まわりに境界層\\
+		厚さ$\sim\uO[(\text{Reynolds数})^{-1/3}]$\quad{\footnotesize (Reynolds数$\propto\nu^{-1}$)}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.35\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-1.5cm}\hspace{0\columnwidth}\includegraphics[width=0.8\columnwidth]{./fig/gizon1.png}
+	\caption{\hspace{0\columnwidth}非粘性 : (赤道対称)連続モード解}
+	\end{figure}
+	\begin{figure}
+	\centering
+	\vspace{-0.5cm}\hspace{-0.1\columnwidth}\includegraphics[width=1.05\columnwidth]{./fig/gizon2.png}
+	\caption{\hspace{0\columnwidth}粘性あり : 離散モード解}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{研究の目的}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\vspace{-0.6cm}	\begin{tcolorbox}[bottom=1mm, top=1mm, left=1mm, right=1mm]
+	\begin{itemize}
+		\item[$\star$] \alert{【最終目標】離散モードを見つけたい $\rightarrow$ 地球外核 / 地磁気変動の研究へ}\\
+		\item[$\star$] 実際の地球コアにより近い背景磁場分布で解きたい (\alert{連続モードが現れる})
+	\end{itemize}
+	\tcblower
+	\begin{itemize}
+		\item[(1)] 連続モードの存在下で, "遅い波の近似"は適切なのか疑問\\
+		\textcolor{subalert}{"遅い波の近似"なし}で、2次元回転球面の理想MHD (\textcolor{subalert}{磁気拡散なし})の問題を解く\\
+		\vspace{0.1cm}
+		\qquad$\Downarrow$\quad{\footnotesize 今回選んだ背景磁場では, 気になる離散モードは見つからなかった}
+		\item[(2)] 非理想MHD (\textcolor{subalert}{磁気拡散あり})で計算し, 連続モードを消してみる
+	\end{itemize}
+	\end{tcolorbox}
+	{\scriptsize
+	\underline{細かい個人的気になるポイント (しかし, criticalな問題の気もする)}
+	\begin{itemize}
+		\item[(a)] 理想MHD解と非理想MHD解の関係性\\
+		連続モードは時間変化を表すために必要だと思ったのに, 散逸があると消えてしまうのはなぜ？
+		\item[(b)] 連続モードが出現するような状況での"遅い波の近似"の妥当性\\
+		見たくない連続モードが消えるので上手い近似なのか, それとも不適切なのか
+		\item[(c)] 地球物理学者は簡単モデルが大好き\\
+		$\bm{B}_{0}=B_0\sin\theta\hat{\bm{e}}_\phi$では, 遅い磁気Rossby波の離散モードがあったのに, 背景磁場分布を変えると消えてしまった
+	\end{itemize}
+	}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\section{理想MHD (磁気拡散なし)}
+\subsection{基礎方程式}
+
+\begin{frame}\frametitle{選んだ背景磁場と解くべき方程式}
+\begin{columns}[t]
+
+\begin{column}{0.9\columnwidth}
+	\underline{背景磁場 : 赤道反対称な東西磁場}\quad{\small 　以下、\textcolor{subalert}{$\mu=\cos\theta$}}とする\\
+	\begin{itemize}
+		\item $\bm{B}_0\,=\,B_0\mathcal{B}(\theta)\sin\theta\hat{\bm{e}}_\phi$とする\\
+		特に、\alert{$\bm{B}_0\,=\,B_0\sin\theta\cos\theta\hat{\bm{e}}_\phi$} ($\mathcal{B}=\cos\theta$)
+	\end{itemize}
+	\vspace{0.1cm}
+	\underline{基礎方程式} : 運動方程式・誘導方程式\\
+	\begin{itemize}
+		\item[ ] \vspace{-0.1cm}{\small $\tilde{\varPsi}_u=$流線関数, $\tilde{\varPsi}_b=$磁場の流線関数, $\lambda=\omega/2\varOmega_0$}
+\\
+	\end{itemize}
+	\vspace{-0.3cm}
+	{\small
+	\begin{align}
+	\left(-\lambda\nabla_\mathrm{h}^2+m\right)\tilde{\varPsi}_u\,&=\,m\alpha\left\{\mathcal{B}\nabla_\mathrm{h}^2-\frac{\ud^2}{\ud\mu^2}[\mathcal{B}(1-\mu^2)]\right\}\tilde{\varPsi}_b\notag\\
+	\left(-\lambda+\ui E_\eta\nabla_\mathrm{h}^2\right)\tilde{\varPsi}_b\,&=\,m\alpha\mathcal{B}\tilde{\varPsi}_u\qquad\qquad\qquad\textcolor{structure}{\text{($\spadesuit2$)}}\notag
+	\end{align}
+	}
+	\vspace{0.1cm}
+	\underline{無次元パラメータ}
+	\vspace{-0.3cm}
+	{\small
+	\begin{itemize}
+		\item \alert{磁場の強さ} {(Lehnert数)} : $\alert{\alpha}=\dfrac{B_0}{2\varOmega_0R_0\sqrt{\rho_0\mu_\mathrm{m}}}$\\
+		\item \alert{磁気拡散の大きさ} {(磁気Ekman数)} : $\alert{E_\eta}=\dfrac{\eta_\mathrm{\eta}}{2\varOmega_0R_0^2}$
+	\end{itemize}
+	}
+\end{column}
+\begin{column}{0.05\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.8cm}\hspace{-2.5\columnwidth}\includegraphics[width=3.5\columnwidth]{./fig/toroidal.png}
+	\caption{\hspace{-3\columnwidth}$B_{0\phi}=B_0\sin\theta\cos\theta$}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{解くべき方程式}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{数値計算で解く場合}
+	\begin{itemize}
+		\item \textcolor{structure}{($\spadesuit2$)}式を Legendre陪多項式で展開 (切断波数1000次)
+		\item 固有値問題は, MATLAB R2016b の\texttt{eig}コマンドを用いた
+	\end{itemize}
+	\vspace{0.1cm}
+	\underline{解析的に調べる場合} : 2 つの式を 1 つの微分方程式に
+	\begin{itemize}
+		\item 理想MHD ($E_\eta=0$)
+		\vspace{-0.2cm}
+		{\footnotesize
+		\begin{equation}
+			\frac{\ud}{\ud \mu}\left[(\alert{\lambda^2-m^2\alpha^2\mathcal{B}^2})(1-\mu^2)\frac{\ud \tilde{\varPsi}_u}{\ud \mu}\right]-\left[\frac{m^2(\lambda^2-m^2\alpha^2\mathcal{B}^2)}{1-\mu^2}+m\left(\lambda+2m\alpha^2\mathcal{B}\frac{\ud}{\ud\mu}(\mathcal{B}\mu)\right)\right]\tilde{\varPsi}_u\,=\,0\qquad\textcolor{structure}{\text{($\spadesuit1$})}\notag
+		\end{equation}
+		}
+		\vspace{-0.1cm}\alert{確定特異点} : \alert{$\lambda^2=m^2\alpha^2[\mathcal{B}(\mu)]^2$}となる$\mu=\mu_\mathrm{c}$に臨界緯度
+		\vspace{0.1cm}
+		\item 非理想MHD ($E_\eta\neq0$)
+		\vspace{-0.2cm}
+		{\scriptsize
+		\begin{align}
+			\left[-\lambda\nabla_\mathrm{h}^2+m+\lambda\mathcal{B}\frac{\ud}{\ud\mu}\left(\frac{1-\mu^2}{\mathcal{B}^2}\frac{\ud\mathcal{B}}{\ud\mu}\right)+\frac{2\lambda(1-\mu^2)}{\mathcal{B}}\frac{\ud\mathcal{B}}{\ud\mu}\frac{\ud}{\ud\mu}\right]&(-\lambda+\ui E_\eta\nabla^2_\mathrm{h})\tilde{\varPsi}_b\notag\\
+			\,&=\,m^2\alpha^2\mathcal{B}\left\{\mathcal{B}\nabla_\mathrm{h}^2-\frac{\ud^2}{\ud\mu^2}[\mathcal{B}(1-\mu^2)]\right\}\tilde{\varPsi}_b\qquad\textcolor{structure}{\text{($\spadesuit1$})}\notag
+		\end{align}
+		}
+	\end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{数値計算の結果}
+\begin{frame}\frametitle{理想MHD ($E_\eta=0$) の場合の分散関係}
+
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{東西波数 $m=2$}
+	\begin{itemize}
+		\item 連続モードで埋めつくされて, 埋もれた離散モードがあるのかどうか分からない
+		\item 右図は, 摂動のエネルギー比 \textcolor{subalert}{$0.5-\text{(磁場エネルギー)}/\text{(全エネルギー)}$} で色付けしたもの\\
+		もしかすると離散モードが浮かび上がるかもと思ったが, 見当たらなかった
+		\item \scriptsize 中心の白抜き部分は, 解が収束していないのでプロットしていない
+	\end{itemize}
+	\vspace{-0.3cm}
+\end{column}
+
+\end{columns}
+\begin{columns}[t]
+
+\begin{column}{0.5\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/MHDsphere2D_sincos_eig_m=2_Eeta=0_Nt=1000.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/MHDsphere2D_sincos_eig_m=2_Eeta=0_Nt=1000_ene.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{理想MHD ($E_\eta=0$) の場合の分散関係}
+
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{連続モードがない場合との比較}
+	\begin{itemize}
+		\item log-logプロットで見ても, 遅い磁気Rossby波に対応する離散モードは見つからない
+	\end{itemize}
+\end{column}
+
+\end{columns}
+\begin{columns}[t]
+
+\begin{column}{0.5\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/dispersion_sin2.png}
+	\caption{\hspace{0\columnwidth}連続モードがない場合 : $\bm{B}_0\,=\,B_0\sin\theta\hat{\bm{e}}_\phi$}
+	\end{figure}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/MHDsphere2D_sincos_eig_m=2_Eeta=0_Nt=1000_small_a.png}
+	\caption{\hspace{0\columnwidth}連続モードがある場合 : $\bm{B}_0\,=\,B_0\sin\theta\cos\theta\hat{\bm{e}}_\phi$}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{解析的結果}
+
+\begin{frame}\frametitle{固有関数}
+
+\begin{columns}[t]
+
+\begin{column}{0.6\columnwidth}
+	\,\,\underline{確定特異点まわりのFrobenius級数解}
+	\begin{itemize}
+		\item \textcolor{structure}{($\spadesuit1$)}式の臨界緯度まわりの線形独立な解
+		{\footnotesize
+		\begin{align}
+		\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}\,&=\,1+\sum_{k=1}^\infty a_k(\mu-\mu_\mathrm{c})^k\notag\\
+		\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}\,&=\,\left(1+\sum_{k=1}^\infty a_k(\mu-\mu_\mathrm{c})^k\right)\ln|\mu-\mu_\mathrm{c}|\,+\,\sum_{k=1}^\infty b_k(\mu-\mu_\mathrm{c})^k\notag
+		\end{align}
+		}
+		\begin{itemize}
+			\item[-] 2番目の解$\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}$は$\log$型の特異性をもつ
+		\end{itemize}
+		\vspace{0.2cm}
+		\item 右図は, $m=2$のときの連続モードの固有関数\\
+		(左: 流線関数, 右: 磁場の流線関数)\\
+		\begin{itemize}
+			\item[-] $\mu=\mu_\mathrm{c}$で尖った構造
+		\end{itemize}
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.4\columnwidth}
+\vspace{-0.5cm}
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/eigvec1.png}
+	\caption{\hspace{0\columnwidth}$\alpha=10^{-4}$, $\lambda\approx8.0\times10^{-9}$}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/eigvec2.png}
+	\caption{\hspace{0\columnwidth}$\alpha=10^{-2}$, $\lambda\approx0.014$}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/eigvec3.png}
+	\caption{\hspace{0\columnwidth}$\alpha=10^{-2}$, $\lambda\approx0.0029$}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{確定特異点での接続条件}
+
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\underline{\textcolor{structure}{($\spadesuit1$)}式を$\mu=\mu_\mathrm{c}$をはさむ狭い区間で積分}
+	\vspace{-0.5cm}
+	{\scriptsize
+	\begin{equation}
+	\left[\!\!\left[(\alert{\lambda^2-m^2\alpha^2\mathcal{B}^2})(1-\mu^2)\frac{\ud \tilde{\varPsi}_u}{\ud \mu}\right]\!\!\right]_{\mu=\mu_\mathrm{c}}-\cancel{\int_{\mu_\mathrm{c}-\delta}^{\mu_\mathrm{c}+\delta}\ud\mu\left[\frac{m^2(\lambda^2-m^2\alpha^2\mathcal{B}^2)}{1-\mu^2}+m\left(\lambda+2m\alpha^2\mathcal{B}\frac{\ud}{\ud\mu}(\mathcal{B}\mu)\right)\right]\tilde{\varPsi}_u}\,=\,0\notag
+	\end{equation}
+	}
+	\vspace{-0.3cm}
+	\begin{itemize}
+		{\small 
+		\item せいぜい$\tilde{\varPsi}_u^{(\mathrm{id},\mathrm{c})}\sim\ln|\mu-\mu_\mathrm{c}|$なので, 第 2 項はゼロ
+		\item 接続条件 $\left[\!\!\left[(\mu-\mu_\mathrm{c})\frac{\ud \tilde{\varPsi}_u}{\ud \mu}\right]\!\!\right]_{\mu=\mu_\mathrm{c}}=0$\\
+		$\quad\qquad\Longrightarrow\quad\left.\frac{\ud \tilde{\varPsi}_u}{\ud \mu}\right|_{\mu=\mu_\mathrm{c}}\sim \uO[(\mu-\mu_\mathrm{c})^{-1}]$\quad\ or \quad$\delta(\mu-\mu_\mathrm{c})\times\uO[(\mu-\mu_\mathrm{c})^0]$
+		\item 接続条件を考えると, \alert{$-1\leq\mu_\mathrm{c}\leq1$ならば独立な解は 3 つ} : \\
+		\vspace{-0.2cm}
+		\begin{equation}
+		\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}\,,\quad\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}\,,\quad H(\mu-\mu_\mathrm{c})\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}\qquad\text{($H$はステップ関数)}\notag
+		\end{equation}
+		与えられた$\lambda$に対して, $-1\leq\mu_\mathrm{c}\leq1$ならばいつでも固有モードになれる\,\,$\Longrightarrow$\,\,\alert{連続モード}
+		\item 結果的に, 無限小の散逸を考えて$\mu$を複素数に拡張し, \\
+		$\ln(\mu-\mu_\mathrm{c})=\ln|\mu-\mu_\mathrm{c}|\pm\ui\upi H(\mu-\mu_\mathrm{c})$と扱う方法と等価
+		}\quad{\footnotesize (Lin, 1961~\cite{lin_1961}; Iga, 2013~\cite{iga_2013})}
+	\end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{(速い磁気) Rossby波に関して}
+
+\begin{columns}[t]
+
+\begin{column}{0.65\columnwidth}
+	\underline{連続モードに埋もれた(速い磁気)Rossby波}
+	\begin{itemize}
+		\vspace{0.2cm}
+		\item 東西波数$m=1$のときだけ, \\
+		連続モードに埋もれた離散モードが見つかる
+		\vspace{0.2cm}
+		\item $\tilde{\varPsi}_u\propto\mathscr{P}_1^1$, $\tilde{\varPsi}_b\propto\mathscr{P}_2^1$であり, \textcolor{structure}{($\spadesuit2$)}式において,
+		{\footnotesize
+		\begin{align}
+		\left(-\lambda\nabla_\mathrm{h}^2+m\right)\tilde{\varPsi}_u\,&=\,m\alpha\left\{\mu\nabla_\mathrm{h}^2-\frac{\ud^2}{\ud\mu^2}[\mu(1-\mu^2)]\right\}\tilde{\varPsi}_b\alert{\,=\,0}\notag\\
+		\left(-\lambda+\ui E_\eta\nabla_\mathrm{h}^2\right)\tilde{\varPsi}_b\,&=\,m\alpha\mu\tilde{\varPsi}_u\notag
+		\end{align}
+		}となる特殊な状況なので, \\
+		\vspace{0.1cm}
+		$\lambda^2=m^2\alpha^2\mu^2$となる$\mu=\mu_\mathrm{c}$が\\
+		$-1\leq\mu_\mathrm{c}\leq1$を満たしても, 確定特異点が存在しない
+	\end{itemize}
+\end{column}
+
+\begin{column}{0.35\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.5cm}\hspace{0\columnwidth}\includegraphics[width=\columnwidth]{./fig/MHDsphere2D_sincos_eig_m=1_Eeta=0_Nt=1000_ene.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{まとめ(1)}
+
+\begin{frame}\frametitle{理想MHD (磁気拡散なし)の場合のまとめ}
+
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\vspace{-0.5cm}
+	\begin{tcolorbox}
+	\small
+	\begin{itemize}
+		\item 数値的に計算した結果, 予想通り連続モードが現れた\\
+		背景磁場分布を変更しただけで, \alert{遅い磁気Rossby波は消えてしまった}
+		\item 連続モードの固有関数は, 確定特異点で特異的なふるまいをする
+		\item 解析的な計算より, 特異点まわりの解の表現$\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}$, $\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}$を得た
+		\begin{itemize}
+			\item $\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}$は, 確定特異点で$\log$型の特異性を示す
+			\item $\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}$の係数は, 確定特異点の前後で不連続であってもよく,\\
+			数学的には, このことが原因で連続モードが現れている
+		\end{itemize}
+		\item 特殊な状況においては, 連続モードに埋もれた離散モードが存在できる\\
+		埋もれたモードが, 様々な背景磁場分布に対して普遍的に存在しているとは考えにくい
+		\item[\textcolor{subalert}{(※)}] \textcolor{subalert}{MHD浅水波系にすると, 離散モードを見つける望みが少し出てくる (D論の後半)\\
+	確定特異点付近で振幅がほとんど$0$になっていれば良さそう}
+	\end{itemize}
+	\end{tcolorbox}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\section{非理想MHD (磁気拡散あり)}
+
+\subsection{解析的結果}
+\begin{frame}\frametitle{微小な磁気拡散がある場合の解析解}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	微小な磁気拡散($E_\eta\ll1$)を導入すると, 臨界緯度(確定特異点)に\alert{境界層ができる}\\
+	散逸の影響により, $\lambda$は複素数になるので, 確定特異点$\mu_\mathrm{c}$も複素数\\
+	\vspace{0.2cm}
+	\underline{境界層内部解} : ストレッチ座標$\varepsilon\xi=\mu-\mu_\mathrm{c}$ ($\varepsilon\ll1$)
+	\vspace{-0.2cm}
+	{\footnotesize
+	\begin{equation}
+	\text{\textcolor{structure}{($\spadesuit1$)}式}\,\,\Longrightarrow\,\,\frac{\ud}{\ud\xi}\left(\frac{\ud^2\chi}{\ud\xi^2}-\xi\chi\right)\,=\,\uO(\varepsilon^1)\,,\quad\chi\,=\,\frac{\ud\tilde{\varPsi}_b}{\ud\xi}\qquad\left(\alert{\varepsilon\sim\left(\frac{E_\eta}{\alpha}\right)^{1/3}\sim(\text{Lundquist数})^{-1/3}}\right)\notag
+	\end{equation}
+	}
+	\vspace{-0.6cm} ゆえに, 4つの線形独立な解は,
+	\vspace{0.1cm}
+	{\scriptsize
+	\begin{align}
+	\tilde{\varPsi}_{b,1}^{(\mathrm{res},\mathrm{c})}\,=\,1+\uO(\varepsilon^1)\,,&\qquad\tilde{\varPsi}_{b,2}^{(\mathrm{res},\mathrm{c})}\,=\,\int_0^{\xi}(-\upi)\mathrm{Hi}(z)\ud z+\uO(\varepsilon^1)\notag\\
+		\tilde{\varPsi}_{b,3}^{(\mathrm{res},\mathrm{c})}\,=\,\int_{\infty_2}^{\xi}\mathrm{Ai}\left(z\ue^{2\upi\ui/3}\right)\ud z+\uO(\varepsilon^1)\,,&\qquad\tilde{\varPsi}_{b,3}^{(\mathrm{res},\mathrm{c})}\,=\,\int_{\infty_3}^{\xi}\mathrm{Ai}\left(z\ue^{-2\upi\ui/3}\right)\ud z+\uO(\varepsilon^1)\notag
+	\end{align}
+	}
+	\vspace{-0.6cm}
+	{\small
+	\begin{itemize}
+		\item $\mathrm{Hi}(z)$はScorer関数で, 複素平面の$1/3$セクターでdominant {\footnotesize (無限遠で指数関数的に発散)}
+		\item $\mathrm{Ai}(z)$はAiry関数で, 複素平面の$2/3$セクターでdominant\\
+		Airy関数の選び方には任意性があるが, $\mu$の実軸上の$+\infty$側で, \\
+		$\tilde{\varPsi}_{b,3}^{(\mathrm{res},\mathrm{c})}$がdominantなら, $\tilde{\varPsi}_{b,4}^{(\mathrm{res},\mathrm{c})}$はrecessiveになり, もしくはその逆になるように選んだ
+	\end{itemize}
+	}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{理想/非理想MHD解の対応関係}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\vspace{-0.5cm}
+	{\small
+	\begin{table}[htb]
+  		\begin{tabular}{|c|c|} \hline
+     		理想MHD解 & 非理想MHD解 \\ \hline \hline
+    		$\tilde{\varPsi}_{u,1}^{(\mathrm{id},\mathrm{c})}=1+a_1(\mu-\mu_\mathrm{c})+\cdots$ & $\tilde{\varPsi}_{b,1}^{(\mathrm{res},\mathrm{c})}\,=\,1+\uO(\varepsilon^1)$\\ \hline
+    		$\tilde{\varPsi}_{u,2}^{(\mathrm{id},\mathrm{c})}=\ln|\mu-\mu_\mathrm{c}|+a_1(\mu-\mu_\mathrm{c})\ln|\mu-\mu_\mathrm{c}|+\cdots$ & $\tilde{\varPsi}_{b,2}^{(\mathrm{res},\mathrm{c})}\,=\,\int^{\xi}(-\upi)\mathrm{Hi}(z)\ud z+\uO(\varepsilon^1)$\\ \hline
+  		\end{tabular}
+	\end{table}
+	}
+	\begin{itemize}
+		\item Scorer関数の漸近的($\xi\rightarrow\infty$)ふるまい $\int_0^\xi(-\upi)\mathrm{Hi}(z)\ud z\sim\ln(\mu-\mu_\mathrm{c})-\ln(-\varepsilon)+\uO(\varepsilon^0)$
+		{\small
+		\item 磁気拡散が無限小$\varepsilon\rightarrow0$で, $\xi\rightarrow\infty$のとき, 境界層内部解$\tilde{\varPsi}_{b,2}^{(\mathrm{res},\mathrm{c})}$は,\\
+		境界層の外の解である$\tilde{\varPsi}_{b,2}^{(\mathrm{id},\mathrm{c})}$と繋がる
+		\item $\varepsilon$は$3$価だが, 境界層の内外で解がうまく繋がるように1つ選ぶ
+		\vspace{0.5cm}
+		\item $\varepsilon$が有限のときは, $\tilde{\varPsi}_{b,3}^{(\mathrm{res})}$と$\tilde{\varPsi}_{b,4}^{(\mathrm{res})}$は, 赤道と極で有限の値を持つが,\\
+		$\varepsilon\rightarrow0$となると, それらは赤道と極で発散してしまうので, 独立な解の候補から除外される\\
+		結果的に, 理想MHD極限では, 線型独立な解の数が$4\rightarrow2$になって, 理想MHDの問題に帰着する
+		}
+	\end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{線形独立な解の概観}
+\begin{columns}[t]
+
+\begin{column}{0.6\columnwidth}
+	\vspace{-0.5cm}
+	\begin{itemize}
+	\item 境界層は, Scorer関数がdominantになるセクター\\
+	$+$ (複素数の)確定特異点まわり$\uO(\varepsilon)$の領域
+	\item 磁気拡散の効果を入れて, 連続モードを排除しようとしても, 特異点とそのまわりの境界層の影響は,\\
+	多少なりとも受けてしまう
+	\end{itemize}
+	\begin{figure}
+	\centering
+	\vspace{-0.3cm}\hspace{0\columnwidth}\includegraphics[width=0.85\columnwidth]{./fig/small_diffusion1.png}
+	\caption{\hspace{0\columnwidth}}
+	\end{figure}
+\end{column}
+
+\begin{column}{0.4\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-1.5cm}\hspace{0\columnwidth}\includegraphics[width=0.9\columnwidth]{./fig/small_diffusion2.png}
+	\caption{\hspace{0\columnwidth}$\mathcal{B}=\mu$の場合}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{数値計算の結果}
+
+\begin{frame}\frametitle{非理想MHDの場合の分散関係と固有関数の例}
+\begin{columns}[t]
+
+\begin{column}{0.6\columnwidth}
+	数値的に解くことは容易だが,\\
+	ほとんどのモードが減衰率が大きく,\\
+	あまり興味のある離散モードが見つからない
+	\begin{figure}
+	\centering
+	\vspace{-0.1cm}\hspace{0\columnwidth}\includegraphics[width=0.8\columnwidth]{./fig/eig_res.png}
+	\caption{\hspace{0\columnwidth}$m=1$, $E_\eta=10^9$}
+	\end{figure}
+\end{column}
+
+\begin{column}{0.4\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.7cm}\hspace{0\columnwidth}\includegraphics[width=0.7\columnwidth]{./fig/eigvec_res1.png}
+	\caption{\hspace{0.2\columnwidth}\vspace{-0.1cm}{\scriptsize $m=1$, $E_\eta=10^{-9}$, $\alpha=10^{-4}$\\
+	\hspace{0.2\columnwidth}$\lambda=-4.9\times10^{-9}-8.3\times10^{-11}\ui $}}
+	\end{figure}
+	\begin{figure}
+	\centering
+	\vspace{-0.6cm}\hspace{0\columnwidth}\includegraphics[width=0.7\columnwidth]{./fig/eigvec_res2.png}
+	\caption{\hspace{0.2\columnwidth}\vspace{-0.1cm}{\scriptsize $m=1$, $E_\eta=10^{-9}$, $\alpha=10^{-4}$\\
+	\hspace{0.2\columnwidth}$\lambda=1.4\times10^{-8}-1.9\times10^{-8}\ui $}}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{強磁場下での不安定モード}
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\vspace{-0.5cm}
+	\begin{itemize}
+		\item 地球ではありそうにない条件だが,背景磁場を強くすると\\
+		$m=1$のとき西進する不安定モードが現れる
+	\item $E_\eta\rightarrow0$で, 臨界曲線 : $\alpha\propto E_\eta^{1/2}$
+	\item 境界層が赤道付近にあり, 4つの解のうち $\tilde{\varPsi}_{b,3}^{(\mathrm{res})}$か$\tilde{\varPsi}_{b,4}^{(\mathrm{res})}$のいずれかを排除した 3 つで\\
+	不安定モードの解を構成していると考えられる
+	\end{itemize}
+\end{column}
+	
+\end{columns}
+\begin{columns}[t]
+
+\begin{column}{0.5\columnwidth}
+	\begin{figure}
+	\centering
+	\vspace{-0.2cm}\hspace{0\columnwidth}\includegraphics[width=0.9\columnwidth]{./fig/marginal.png}
+	\caption{(左) 成長率　(右) 位相速度}
+	\end{figure}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+	
+	\begin{figure}
+	\centering
+	\vspace{0cm}\hspace{0\columnwidth}\includegraphics[width=0.8\columnwidth]{./fig/unstable.png}
+	\end{figure}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\subsection{まとめ(2)}
+
+\begin{frame}\frametitle{非理想MHD (磁気拡散あり)の場合のまとめ}
+
+\begin{columns}[t]
+
+\begin{column}{\columnwidth}
+	\vspace{-0.6cm}
+	\begin{tcolorbox}
+	\begin{itemize}
+		\item 磁気拡散の効果を加えると, 予想通り連続モードは消失するが,\\
+		ほとんどのモードが減衰が強いモードで, \alert{地球科学的には価値がない}
+		\item 数値的な結果は複雑で, まだ整理ができていない (近々行いたいと考えている)
+		\item 解析的研究により, 解の構造や理想MHD問題との関係性については,\\
+		少し理解が深まった
+		\item 不安定モードは, 流体力学的や他の天体などにおいては重要かもしれない
+	\end{itemize}
+	\end{tcolorbox}
+	\vspace{-0.1cm}
+	今後検討したいこと
+	\begin{itemize}
+		\item 連続モードが存在する状況で、あえて"遅い波の近似"を用いて離散モードを求めてみる\\
+		近似によって, 全く別の問題を解いてしまったことになっているのか,\\
+		それともうまい近似なのかを確認したい
+		\item 非線形臨界層
+		\item 3次元薄層の問題への拡張、鉛直背景磁場の影響
+	\end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------------------------------
+
+\beamertemplatetextbibitems
+\bibliographystyle{./etc/my_jplain.bst}
+
+\begin{frame}[allowframebreaks]\frametitle{Reference}
+	\fontsize{5pt}{0pt}\selectfont
+	\bibliography{./etc/reference.bib}
+\end{frame}
+
+\end{document}
