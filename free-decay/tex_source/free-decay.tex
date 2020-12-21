@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper]{jsarticle}
+
+\usepackage[top=15truemm,bottom=20truemm,left=15truemm,right=15truemm]{geometry} % 余白
+\usepackage{newtxtext}  % 欧文フォント Times
+\usepackage{url} % URLを入れる時用
+\renewcommand\thefootnote{*\arabic{footnote}} % footnoteにアスタリスクをつける
+\usepackage{amsmath,amssymb} % 数式
+\usepackage{bm} % ベクトル
+\usepackage{mathrsfs} % 花文字
+\usepackage[dvipdfmx]{graphicx} % 画像
+\usepackage[dvipdfmx]{xcolor} % 色付き文字
+\usepackage{tcolorbox} %tcolorbox
+\usepackage{subcaption} % サブキャプション
+\usepackage[dvipdfmx]{xcolor, hyperref} %ハイパーリンク(なるべく後ろがいいらしい)
+
+\DeclareSymbolFont{eulerup}{U}{zeur}{m}{n}
+\DeclareMathSymbol{\umu}{\mathalpha}{eulerup}{"16} % Eulerフォントmu
+\DeclareMathSymbol{\upi}{\mathalpha}{eulerup}{"19} % Eulerフォント pi
+\DeclareMathSymbol{\upartial}{\mathalpha}{eulerup}{"40} % Eulerフォント partial
+\DeclareMathSymbol{\uO}{\mathalpha}{eulerup}{`O} % Eulerフォント O
+\DeclareMathSymbol{\uo}{\mathalpha}{eulerup}{`o} % Eulerフォント o
+\DeclareMathSymbol{\ul}{\mathalpha}{eulerup}{"60} % Eulerフォント リットル
+\DeclareMathSymbol{\ud}{\mathalpha}{eulerup}{`d} % Eulerフォント d
+\DeclareMathSymbol{\ue}{\mathalpha}{eulerup}{`e} % Eulerフォント e
+\DeclareMathSymbol{\ui}{\mathalpha}{eulerup}{`i} % Eulerフォント i
+\DeclareMathSymbol{\uhbar}{\mathalpha}{eulerup}{"80} % Eulerフォント h bar
+
+% 文章の幅が変わらないようにする
+\hyphenpenalty=0\relax
+\exhyphenpenalty=0\relax
+\sloppy
+
+\begin{document}
+
+%%%%%%%%%%
+\section*{\textcolor{red}{\underline{Free decayモード}}}
+%
+球殻($R_\mathrm{I}\leq r\leq R_\mathrm{O}$)のFree decayモードを考える. 基礎方程式は,
+\begin{equation}
+\frac{\upartial\bm{B}}{\upartial t}\,=\,\eta_\mathrm{m}\nabla^2\bm{B}\qquad(R_\mathrm{I}< r< R_\mathrm{O})
+\end{equation}
+である. $r>R_\mathrm{O}$と$0\leq r<R_\mathrm{I}$が, 絶縁体($\mathrm{i}$)か完全導体($\mathrm{pc}$)である場合を考える(以下, $\mathrm{Ipc/Oi}$などと表す). さらに, 球($R_\mathrm{I}=0$)の場合も考える($\mathrm{FS/Oi}$などと表す). 絶縁体中では,
+\begin{subequations}
+\begin{equation}
+\bm{\nabla}\times\bm{B}\,=\,\bm{0}\,,\quad\bm{B}\,=\,-\bm{\nabla}\varPsi\qquad(\text{絶縁体内})
+\end{equation}
+であり, 完全導体中では,
+\begin{equation}
+\quad\bm{B}\,=\,\bm{0}\qquad(\text{完全導体内})
+\end{equation}
+\end{subequations}
+である. 接続条件(境界条件)は, 絶縁体の場合は,
+\begin{subequations}
+\begin{equation}
+[\![\bm{B}]\!]\,=\,\bm{0}\quad\Longrightarrow\quad\bm{B}=-\bm{\nabla}\varPsi\qquad(\text{絶縁体の境界})
+\end{equation}
+とし, 完全導体の場合は, 境界条件が不足するので, やむおえず表面電流の存在を無視して,
+\begin{equation}
+[\![\bm{B}]\!]\,=\,\bm{0}\quad\Longrightarrow\quad\bm{B}=\bm{0}\qquad(\text{完全導体の境界})
+\end{equation}
+\end{subequations}
+とする. 球の場合は, $r=0$で発散しない解を選ぶ.\par
+%
+トロイダル・ポロイダル分解\footnote{$\bm{B}=\bm{\nabla}\times\bm{\nabla}\times(P\hat{\bm{e}}_r)\,+\,\bm{\nabla}\times(T\hat{\bm{e}}_r)$とする流儀もあるが(例えば, Chandrasekharの教科書), この場合は以下で現れる$\nabla^2\rightarrow(\upartial^2/\upartial r^2)-\mathcal{L}^2/r^2$と変化することに注意.}
+\begin{equation}
+\bm{B}\,=\,\bm{B}_\mathrm{P}+\bm{B}_\mathrm{T}\,=\,\bm{\nabla}\times\bm{\nabla}\times(P\bm{r})\,+\,\bm{\nabla}\times(T\bm{r})
+\end{equation}
+を用いると, (1)式は,
+\begin{equation}
+\frac{\upartial P}{\upartial t}\,=\,\eta_\mathrm{m}\nabla^2P\,,\quad\frac{\upartial T}{\upartial t}\,=\,\eta_\mathrm{m}\nabla^2T\qquad(R_\mathrm{I}< r< R_\mathrm{O})
+\end{equation}
+となる. ここで,
+\begin{subequations}
+\begin{align}
+\bm{B}_\mathrm{P}\,&=\,\frac{\mathcal{L}^2P}{r}\hat{\bm{e}}_r\,+\,\frac{1}{r}\frac{\upartial^2(rP)}{\upartial r\upartial\theta}\hat{\bm{e}}_\theta\,+\,\frac{1}{r\sin\theta}\frac{\upartial^2(rP)}{\upartial r\upartial\phi}\hat{\bm{e}}_\phi\\
+\bm{B}_\mathrm{T}\,&=\,\frac{1}{\sin\theta}\frac{\upartial T}{\upartial\phi}\hat{\bm{e}}_\theta\,-\,\frac{\upartial T}{\upartial\theta}\hat{\bm{e}}_\phi
+\end{align}
+\end{subequations}
+\begin{equation}
+\mathcal{L}^2\,=\,-\left[\frac{1}{\sin\theta}\frac{\upartial}{\upartial\theta}\left(\sin\theta\frac{\upartial}{\upartial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\upartial^2}{\upartial\phi^2}\right]
+\end{equation}
+である. このとき, 接続条件$[\![\bm{B}]\!]\,=\,\bm{0}$は, 
+\begin{equation}
+[\![P]\!]\,=\,0\,,\quad\left[\!\!\left[\frac{\upartial (rP)}{\upartial r}\right]\!\!\right]\,=\,0\,,\quad[\![T]\!]\,=\,0\,\qquad(\text{境界})
+\end{equation}
+と言い換えられる. さらに, 
+\begin{subequations}
+\begin{equation}
+\nabla^2P\,=\,0\,,\quad T\,=\,0\qquad(\text{絶縁体の境界 \& 絶縁体内})
+\end{equation}
+\begin{equation}
+P\,=\,0\,,\quad T\,=\,0\qquad(\text{完全導体の境界 \& 完全導体内})
+\end{equation}
+\end{subequations}
+となる. ただし, 絶縁体の場合の条件を求めるには, $\bm{\nabla}\times\bm{B}_\mathrm{P}=\bm{\nabla}\times\bm{B}_\mathrm{T}=\bm{0}$を用いた.\par
+%
+(5)式より, ポロイダル磁場とトロイダル磁場は相互に影響を及ぼさないので, ポロイダルfree decayモードとトロイダルfree decayモードがある. それらのモード($\alpha=1,2,\ldots$)で展開すると,
+\begin{subequations}
+\begin{align}
+P\,&=\,\sum_{\alpha=1}^\infty\ue^{\sigma_{\alpha}^{(\mathrm{P})}t}\left(\sum_{n=1}^\infty\sum_{m=0}^{n}\mathcal{P}_{nm\alpha}(r)Y_n^m(\theta,\phi)\right)\\
+T\,&=\,\sum_{\alpha=1}^\infty\ue^{\sigma_{\alpha}^{(\mathrm{T})}t}\left(\sum_{n=1}^\infty\sum_{m=0}^{n}\mathcal{T}_{nm\alpha}(r)Y_n^m(\theta,\phi)\right)
+\end{align}
+\end{subequations}
+とでき, このとき, (5)式と(9)式は,
+\begin{subequations}
+\begin{align}
+\frac{1}{r^2}\frac{\ud}{\ud r}\left(r^2\frac{\ud \mathcal{P}_{n\alpha}}{\ud r}\right)+\left(-\frac{\sigma_{\alpha}^{(\mathrm{P})}}{\eta_\mathrm{m}}-\frac{n(n+1)}{r^2}\right)\mathcal{P}_{n\alpha}\,&=\,0\qquad(R_\mathrm{I}< r< R_\mathrm{O})\\
+\frac{1}{r^2}\frac{\ud}{\ud r}\left(r^2\frac{\ud \mathcal{T}_{n\alpha}}{\ud r}\right)+\left(-\frac{\sigma_{\alpha}^{(\mathrm{T})}}{\eta_\mathrm{m}}-\frac{n(n+1)}{r^2}\right)\mathcal{T}_{n\alpha}\,&=\,0\qquad(R_\mathrm{I}< r< R_\mathrm{O})
+\end{align}
+\end{subequations}
+\begin{subequations}
+\begin{equation}
+\frac{n(n+1)\mathcal{P}_{n\alpha}}{r^2}-\frac{1}{r^2}\frac{\ud}{\ud r}\left(r^2\frac{\ud\mathcal{P}_{n\alpha}}{\ud r}\right)\,=\,0\,,\quad \mathcal{T}_{n\alpha}\,=\,0\qquad(\text{絶縁体の境界 \& 絶縁体内})
+\end{equation}
+\begin{equation}
+\mathcal{P}_{n\alpha}\,=\,0\,,\quad \mathcal{T}_{n\alpha}\,=\,0\qquad(\text{完全導体の境界 \& 完全導体内})
+\end{equation}
+\end{subequations}
+となる. ここで, 式の中には$m$が現れず, 縮退していることがわかるので, $m$の下付き添字は外した. さらに, $n$についても成分ごとに分離している.\par
+%
+(11)式で$\mathcal{F}_{n\alpha}=r\mathcal{P}_{n\alpha}$ (もしくは, $\mathcal{F}_{n\alpha}=r\mathcal{T}_{n\alpha}$)とすると, 
+\begin{equation}
+\frac{\ud^2\mathcal{F}_{n\alpha}}{\ud r^2}+\left(-\frac{\sigma_{\alpha}}{\eta_\mathrm{m}}-\frac{n(n+1)}{r^2}\right)\mathcal{F}_{n\alpha}\,=\,0\qquad(R_\mathrm{I}< r< R_\mathrm{O})\\
+\end{equation}
+となるので, $\mathcal{F}_{n\alpha}$の複素共役をかけて全領域で積分すると,
+\begin{equation}
+-\int^{\infty}_{0}\left|\frac{\ud \mathcal{F}_{n\alpha}}{\ud r}\right|^2\ud r+\int_{0}^{\infty}\left(-\frac{\sigma_{\alpha}}{\eta_\mathrm{m}}-\frac{n(n+1)}{r^2}\right)|\mathcal{F}_{n\alpha}|^2\ud r\,=\,0
+\end{equation}
+を得る. 無限遠で$\mathcal{F}_{n\alpha}=r\mathcal{P}_{n\alpha}\rightarrow0$を用いた. この式を満たすには少なくとも$-\sigma_\alpha>0$でなければならない.\par
+%
+このとき, (11)式において$r\sqrt{-\sigma_{\alpha}/\eta_\mathrm{m}}$を独立変数とする常微分方程式は, 球Besselの微分方程式であるので, (11)式の一般解は
+\begin{subequations}
+\begin{align}
+\mathcal{P}_{n\alpha}\,=\,\mathcal{C}_{\mathrm{P}1}\frac{\mathscr{J}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{P})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\,+\,\mathcal{C}_{\mathrm{P}2}\frac{\mathscr{Y}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{P})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\qquad(R_\mathrm{I}< r< R_\mathrm{O})\\
+\mathcal{T}_{n\alpha}\,=\,\mathcal{C}_{\mathrm{T}1}\frac{\mathscr{J}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{T})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\,+\,\mathcal{C}_{\mathrm{T}2}\frac{\mathscr{Y}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{T})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\qquad(R_\mathrm{I}< r< R_\mathrm{O})
+\end{align}
+\end{subequations}
+となる. ここで, $\mathscr{J}$, $\mathscr{Y}$はそれぞれ第一種, 第二種のBessel関数である. 球の問題の場合は, $r=0$で発散しないように, 
+\begin{subequations}
+\begin{align}
+\mathcal{P}_{n\alpha}\,=\,\mathcal{C}_{\mathrm{P}1}\frac{\mathscr{J}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{P})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\qquad(0\leq r< R_\mathrm{O})\\
+\mathcal{T}_{n\alpha}\,=\,\mathcal{C}_{\mathrm{T}1}\frac{\mathscr{J}_{n+1/2}\left(r\sqrt{-\sigma_{\alpha}^{(\mathrm{T})}/\eta_\mathrm{m}}\right)}{\sqrt{r}}\qquad(0\leq r< R_\mathrm{O})
+\end{align}
+\end{subequations}
+と選ぶ. \par
+%
+次に, 絶縁体内での$\mathcal{P}_{n\alpha}$の式を求める. (12a)式に冪級数解$\mathcal{P}_{n\alpha}=\sum_{k=0}^\infty a_kr^k$を代入し, 係数比較することで,
+\begin{equation}
+\mathcal{P}_{n\alpha}\,=\,\mathcal{D}_1r^{-n-1}\,+\,\mathcal{D}_2r^{n}\qquad(\text{絶縁体内})
+\end{equation}
+となる. これより,
+\begin{subequations}
+\begin{align}
+\mathcal{P}_{n\alpha}\,&=\,\mathcal{D}_2r^{n}\qquad(\text{絶縁体内}, \mathrm{Ii/*}\text{\,の場合})\\
+\mathcal{P}_{n\alpha}\,&=\,\mathcal{D}_1r^{-n-1}\qquad(\text{絶縁体内}, \mathrm{*/Oi}\text{\,の場合})
+\end{align}
+\end{subequations}
+でなければならない. 絶縁体境界で境界条件を用いるとき, (15a)式を(12a)式に代入してもよいが, (18)式を使えば, (12a)式の代わりに1階微分についての条件を得ることができる. (18)式を$r$で微分すると,
+\begin{subequations}
+\begin{align}
+\frac{\ud\mathcal{P}_{n\alpha}}{\ud r}\,&=\,n\mathcal{D}_2r^{n-1}\qquad(\text{絶縁体内}, \mathrm{Ii/*}\text{\,の場合})\\
+\frac{\ud\mathcal{P}_{n\alpha}}{\ud r}\,&=\,-(n+1)\mathcal{D}_1r^{-n-2}\qquad(\text{絶縁体内}, \mathrm{*/Oi}\text{\,の場合})
+\end{align}
+\end{subequations}
+なので, $\mathcal{D}_1$もしくは$\mathcal{D}_2$を消去して,
+\begin{subequations}
+\begin{align}
+\frac{\ud\mathcal{P}_{n\alpha}}{\ud r}\,&=\,\frac{n}{r}\mathcal{P}_{n\alpha}\qquad(\text{絶縁体内}, \mathrm{Ii/*}\text{\,の場合})\\
+\frac{\ud\mathcal{P}_{n\alpha}}{\ud r}\,&=\,-\frac{n+1}{r}\mathcal{P}_{n\alpha}\qquad(\text{絶縁体内}, \mathrm{*/Oi}\text{\,の場合})
+\end{align}
+\end{subequations}
+となる. これを境界条件として用いても良い. (20)式と(12a)式はおそらく, はじめから発散する解を除いておいて解を接続するか、発散する解を入れたまま接続させるかの違いだと思われる(要検討). 必要ならば$\mathcal{D}_1$もしくは$\mathcal{D}_2$は$\mathcal{P}_{n\alpha}$の連続性から求めることができる.
+%%%%%%%%%%
+\subsection*{\textcolor{blue}{\underline{トロイダルfree decayモード}}}
+%
+トロイダルfree decayモードの場合, 球殻の外部で絶縁体か絶縁体かの違いは現れない. ゆえに, 問題設定は球殻($\mathrm{SS}$)か球($\mathrm{FS}$)のいずれかである. (12), (15b), (16b)式より,
+\begin{subequations}
+\begin{equation}
+\begin{pmatrix}
+\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right) & \mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right) \\[10pt]
+\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right) & \mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)
+\end{pmatrix}
+\begin{pmatrix}
+\mathcal{C}_{\mathrm{T}1} \\ \mathcal{C}_{\mathrm{T}2}
+\end{pmatrix}
+=\bm{0}\qquad(\mathrm{SS})
+\end{equation}
+\begin{equation}
+\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)\,=\,0\qquad(\mathrm{FS})
+\end{equation}
+\end{subequations}
+となれば良い. これらの, 自明でない解から求めたい減衰率が得られる. ここで内外半径比$\eta=R_\mathrm{I}/R_\mathrm{O}$と無次元減衰率$\lambda_\alpha=-\sigma_{\alpha}R_\mathrm{O}^2/\eta_\mathrm{m}$を導入した. モードの番号を表す$\alpha$は$n$だけでなく, Bessel関数の零点に関する番号$k$ ($r$方向の波数のようなもの) によっても変化する. すなわち, $\alpha$は$(n,k)$という組で決まる番号である.\par
+%
+固有値が求まれば, $R_\mathrm{I}< r< R_\mathrm{O}$もしくは$0\leq r< R_\mathrm{O}$において,
+\begin{subequations}
+\begin{equation}
+\mathcal{T}_{n\alpha}\,=\,\mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)\frac{\mathscr{J}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)}{\sqrt{r/R_\mathrm{O}}}\,-\,\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)\frac{\mathscr{Y}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)}{\sqrt{r/R_\mathrm{O}}}\qquad(\mathrm{SS})\end{equation}
+\begin{equation}
+\mathcal{T}_{n\alpha}\,=\,\mathscr{J}_{n+1/2}\left(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right)\qquad(\mathrm{FS})
+\end{equation}
+\end{subequations}
+を得る. それ以外の$r$では, $\mathcal{T}_{n\alpha}=0$である.
+%%%%%%%%%%
+\subsection*{\textcolor{blue}{\underline{ポロイダルfree decayモード}}}
+%
+問題設定の全ての組み合わせは, $\mathrm{Ii/Oi}$, $\mathrm{Ii/Opc}$, $\mathrm{Ipc/Oi}$, $\mathrm{Ipc/Opc}$, $\mathrm{FS/Oi}$, $\mathrm{FS/Opc}$の6つである. このうち, 絶縁体境界条件を含まない$\mathrm{Ipc/Opc}$と$\mathrm{FS/Opc}$は, トロイダルfree decayモードの結果を$\mathcal{T}_{n\alpha}\rightarrow\mathcal{P}_{n\alpha}$とすれば, 全く同じである. ゆえに, 別に考える必要のある問題設定は, $\mathrm{Ii/Oi}$, $\mathrm{Ii/Opc}$, $\mathrm{Ipc/Oi}$, $\mathrm{FS/Oi}$の4つである.\par
+%
+球Bessel関数の微分公式より,
+\begin{subequations}
+\begin{equation}
+\frac{\ud}{\ud \left(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha}\right)}\left[\frac{\mathscr{J}_{n+1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha}}}\right]\,=\,-\frac{n+1}{\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha}}\left[\frac{\mathscr{J}_{n+1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha}}}\right]\,+\,\left[\frac{\mathscr{J}_{n-1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha}}}\right]
+\end{equation}
+すなわち,
+\begin{equation}
+\frac{\ud}{\ud r}\left[\frac{\mathscr{J}_{n+1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{r}}\right]\,=\,-\frac{n+1}{r}\left[\frac{\mathscr{J}_{n+1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{r}}\right]\,+\,\frac{\sqrt{\lambda_\alpha}}{R_\mathrm{O}}\left[\frac{\mathscr{J}_{n-1/2}(\frac{r}{R_\mathrm{O}}\sqrt{\lambda_\alpha})}{\sqrt{r}}\right]
+\end{equation}
+\end{subequations}
+なので, (12), (15a), (16a)式より,
+\begin{subequations}
+\begin{equation}
+{\scriptsize
+\begin{pmatrix}
+\dfrac{2n+1}{\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}}\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)-\mathscr{J}_{n-1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \dfrac{2n+1}{\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}}\mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)-\mathscr{Y}_{n-1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) \\[10pt]
+\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)\end{pmatrix}
+\begin{pmatrix}
+\mathcal{C}_{\mathrm{P}1} \\ \mathcal{C}_{\mathrm{P}2}
+\end{pmatrix}
+=\bm{0}\qquad(\mathrm{Ii/Oi})
+}
+\end{equation}
+\begin{equation}
+{\scriptsize
+\begin{pmatrix}
+\dfrac{2n+1}{\eta\sqrt{\lambda_\alpha}^{(\mathrm{P})}}\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)-\mathscr{J}_{n-1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \dfrac{2n+1}{\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}}\mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)-\mathscr{Y}_{n-1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) \\[10pt]
+\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)\end{pmatrix}
+\begin{pmatrix}
+\mathcal{C}_{\mathrm{P}1} \\ \mathcal{C}_{\mathrm{P}2}
+\end{pmatrix}
+=\bm{0}\qquad(\mathrm{Ii/Opc})
+}
+\end{equation}
+\begin{equation}
+\begin{pmatrix}
+\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) \\[10pt]
+\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right) & \mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_\alpha^{(\mathrm{P})}}\right)\end{pmatrix}
+\begin{pmatrix}
+\mathcal{C}_{\mathrm{P}1} \\ \mathcal{C}_{\mathrm{P}2}
+\end{pmatrix}
+=\bm{0}\qquad(\mathrm{Ipc/Oi})
+\end{equation}
+\begin{equation}
+\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\,=\,0\qquad(\mathrm{FS/Oi})
+\end{equation}
+\end{subequations}
+となる. また, $\mathcal{P}_{n\alpha}$の$r$依存性は, $\mathrm{Ii/Oi}$の場合,
+\begin{subequations}
+\begin{equation}
+{\footnotesize
+\mathcal{P}_{n\alpha}\,=\,
+\begin{cases}
+\left[\mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{\eta}}-\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{\eta}}\right]\left(\dfrac{r}{R_\mathrm{I}}\right)^n & (0\leq r< R_\mathrm{I})\\[20pt]
+\mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{J}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}}\,-\,\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{Y}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}} & (R_\mathrm{I}< r< R_\mathrm{O})\\[15pt]
+\left[\mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\,-\,\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\right]\left(\dfrac{r}{R_\mathrm{O}}\right)^{-n-1} & (R_\mathrm{O}\leq r)
+\end{cases}
+}
+\end{equation}
+$\mathrm{Ii/Opc}$の場合,
+\begin{equation}
+{\footnotesize
+\mathcal{P}_{n\alpha}\,=\,
+\begin{cases}
+\left[\mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{J}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{\eta}}-\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{Y}_{n+1/2}\left(\eta\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{\eta}}\right]\left(\dfrac{r}{R_\mathrm{I}}\right)^n & (0\leq r< R_\mathrm{I})\\[20pt]
+\mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{J}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}}\,-\,\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{Y}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}} & (R_\mathrm{I}< r< R_\mathrm{O})\\[10pt]
+0 & (R_\mathrm{O}\leq r)
+\end{cases}
+}
+\end{equation}
+$\mathrm{Ipc/Oi}$の場合,
+\begin{equation}
+{\footnotesize
+\mathcal{P}_{n\alpha}\,=\,
+\begin{cases}
+0 & (0\leq r< R_\mathrm{I})\\[5pt]
+\mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{J}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}}\,-\,\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\dfrac{\mathscr{Y}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)}{\sqrt{r/R_\mathrm{O}}} & (R_\mathrm{I}< r< R_\mathrm{O})\\[15pt]
+\left[\mathscr{Y}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\,-\,\mathscr{J}_{n-1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\mathscr{Y}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{P})}}\right)\right]\left(\dfrac{r}{R_\mathrm{O}}\right)^{-n-1} & (R_\mathrm{O}\leq r)
+\end{cases}
+}
+\end{equation}
+そして, $\mathrm{FS/Oi}$の場合,
+\begin{equation}
+\mathcal{P}_{n\alpha}\,=\,
+\begin{cases}
+\mathscr{J}_{n+1/2}\left(\dfrac{r}{R_\mathrm{O}}\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right) & (0\leq r< R_\mathrm{O})\\[10pt]
+\mathscr{J}_{n+1/2}\left(\sqrt{\lambda_{\alpha}^{(\mathrm{T})}}\right) \left(\dfrac{r}{R_\mathrm{O}}\right)^{-n-1} & (R_\mathrm{O}\leq r)
+\end{cases}
+\end{equation}
+\end{subequations}
+である.
+%
+\begin{figure}[h]
+\begin{minipage}{0.5\hsize}
+	\centering
+	\includegraphics[width=0.9\columnwidth, angle=0]{fig/free-decay_time_t.png}
+	\caption{トロイダル free decay モード($\mathrm{SS}$), もしくはポロイダルfree decay モード($\mathrm{Ipc/Opc}$)の場合 [(21a)式]. $\eta=0$上の星印は球の場合(トロイダル free decay モード($\mathrm{FS}$), ポロイダルfree decay モード($\mathrm{FS/Opc}$)に対応する [(21b)式].}
+\end{minipage}
+\begin{minipage}{0.05\hsize}
+　
+\end{minipage}
+\begin{minipage}{0.45\hsize}
+	\centering
+	\includegraphics[width=0.9\columnwidth, angle=0]{fig/free-decay_time_p_IiOi.png}
+	\caption{ポロイダルfree decay モード($\mathrm{Ii/Oi}$)の場合 [(24a)式]. $\eta=0$上の星印は球の場合(ポロイダルfree decay モード($\mathrm{FS/Oi}$)に対応する [(24d)式]. 収束が悪く, 偽のモードがプロットされてしまっている.}
+\end{minipage}
+\end{figure}
+%
+\begin{figure}[h]
+\begin{minipage}{0.45\hsize}
+	\centering
+	\includegraphics[width=0.9\columnwidth, angle=0]{fig/free-decay_time_p_IiOpc.png}
+	\caption{ポロイダルfree decay モード($\mathrm{Ii/Opc}$)の場合 [(24b)式]. $\eta=0$上の星印は球の場合(ポロイダルfree decay モード($\mathrm{FS/Opc}$)に対応する [(21b)式].}
+\end{minipage}
+\begin{minipage}{0.05\hsize}
+　
+\end{minipage}
+\begin{minipage}{0.45\hsize}
+	\centering
+	\includegraphics[width=0.9\columnwidth, angle=0]{fig/free-decay_time_p_IpcOi.png}
+	\caption{ポロイダルfree decay モード($\mathrm{Ipc/Oi}$)の場合 [(24c)式]. $\eta=0$上の星印は球の場合(ポロイダルfree decay モード($\mathrm{FS/Opc}$)に対応する [(24d)式].}
+\end{minipage}
+\end{figure}
+\end{document}
